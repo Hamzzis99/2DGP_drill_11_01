@@ -161,6 +161,7 @@ class Boy:
             self.ball_count -= 1
             ball = Ball(self.x, self.y, self.face_dir*10)
             game_world.add_object(ball)
+            game_world.add_collision_pair('ball:zombie',ball,None)
 
     def get_bb(self):
         # fill here
@@ -172,5 +173,7 @@ class Boy:
         # fill here
         if group == 'boy:ball':
             self.ball_count += 1
+        if group == 'boy:zombie':
+            game_framework.quit()
             #game_world.remove_object(other) #ball이 other로 넘어갔기 때문에 그러나 자기 스스로 없애는 게 좋음. ball로 스스로 가기
         pass

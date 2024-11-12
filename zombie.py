@@ -33,6 +33,7 @@ class Zombie:
         self.load_images()
         self.frame = random.randint(0, 9)
         self.dir = random.choice([-1,1])
+        self.hp = 2
 
 
     def update(self):
@@ -47,12 +48,35 @@ class Zombie:
 
 
     def draw(self):
-        if self.dir < 0:
-            Zombie.images['Walk'][int(self.frame)].composite_draw(0, 'h', self.x, self.y, 200, 200)
+        if self.hp == 1:
+            width, height = 100, 100  # 크기를 절반으로 설정
+            y_draw = self.y - (height / 2)  # y 위치를 절반만큼 낮춤
         else:
-            Zombie.images['Walk'][int(self.frame)].draw(self.x, self.y, 200, 200)
+            width, height = 200, 200
+            y_draw = self.y
+
+        if self.dir < 0:
+            Zombie.images['Walk'][int(self.frame)].composite_draw(0, 'h', self.x, y_draw, width, height)
+            draw_rectangle(*self.get_bb())
+        elif self.dir >= 0:
+            Zombie.images['Walk'][int(self.frame)].draw(self.x, y_draw, width, height)
+            draw_rectangle(*self.get_bb())
+
 
     def handle_event(self, event):
         pass
 
+    def handle_collision(self, group, other):
+        if group == 'ball:zombie':
+            self.hp -= 1
+            if self.hp <= 0:
+                game_world.remove_object(self)
+            #pass
+
+    def get_bb(self):
+        if self.hp == 1:
+            return self.x - 50, self.y - 100, self.x + 40, self.y + 0
+        else:
+            return self.x-100,self.y-100,self.x+80,self.y+100 #4개의 값으로 구성된 한개의 튜플
+        #pass
 

@@ -32,28 +32,46 @@ def init():
     game_world.add_object(boy, 1)
 
     # fill here
+
+    zombies = [Zombie() for _ in range(5)]
+    game_world.add_objects(zombies, 1)
+
+    for enemy in zombies:
+        game_world.add_collision_pair('ball:zombie',None, enemy)
+        game_world.add_collision_pair('boy:ball', boy, None)
+        game_world.add_collision_pair('boy:zombie', None, enemy)
+
+
+
     #balls = [Ball(random.randint(100, 1600-100), 60, 0) for _ in range(30)]
     balls = [Ball(random.randint(100, 1500), 60, 0) for _ in range(30)]
     game_world.add_objects(balls,1) # 게임 월드에 추가.
 
     # 충돌 대상들을 등록해주기
+    #game_world.add_collision_pair('boy:zombie', boy, None)
     add_collision_pair('boy:ball', boy, None)
     for ball in balls:
         add_collision_pair('boy:ball', None, ball)
 
 
     #zombie 생성
+
     zombies = [Zombie() for _ in range(5)]
-    game_world.add_objects(zombies, 1)
-    
+    #game_world.add_objects(zombies, 1)
+
+    add_collision_pair('boy:zombie', boy, None)
+
+
+
+
 
 def finish():
     game_world.clear()
     pass
 
 
-def colide(boy, ball):
-    pass
+#def colide(boy, ball):
+    #pass
 
 
 def update():
