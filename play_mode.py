@@ -32,7 +32,7 @@ def init():
     game_world.add_object(boy, 1)
 
     # fill here
-
+    # zombie 생성
     zombies = [Zombie() for _ in range(5)]
     game_world.add_objects(zombies, 1)
 
@@ -50,16 +50,13 @@ def init():
     # 충돌 대상들을 등록해주기
     #game_world.add_collision_pair('boy:zombie', boy, None)
     add_collision_pair('boy:ball', boy, None)
+    add_collision_pair('boy:zombie', boy, None)
+
     for ball in balls:
         add_collision_pair('boy:ball', None, ball)
 
 
-    #zombie 생성
 
-    zombies = [Zombie() for _ in range(5)]
-    #game_world.add_objects(zombies, 1)
-
-    add_collision_pair('boy:zombie', boy, None)
 
 
 
